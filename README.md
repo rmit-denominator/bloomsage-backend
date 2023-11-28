@@ -1,4 +1,4 @@
-# FastAPI pipeline for Image Captioning Model
+# BloomSage Backend
 
 This project uses Python and poetry. Remember to run below commands in the root directory of your project where the `pyproject.toml` file is located. Here are the main elements you need to know to get started:
 
