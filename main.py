@@ -3,7 +3,7 @@ from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
 from typing import Annotated
-from model_pipeline import predict_step
+from model_pipeline_template import predict_step
 
 app = FastAPI()
 
@@ -59,10 +59,10 @@ async def create_upload_files(
     # Use os.listdir to get all files in the directory
     # files = os.listdir("./images/tmp")
 
-    print(image_paths)
-    preds = predict_step(image_paths)
+    # print(image_paths)
+    # preds = predict_step(image_paths)
 
-    return {"predictions": [pred for pred in preds]}
+    # return {"predictions": [pred for pred in preds]}
 
 
 if __name__ == "__main__":

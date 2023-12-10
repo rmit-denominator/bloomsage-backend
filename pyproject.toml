@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "image-caption-pipeline"
+name = "bloomsage-backend"
 version = "0.1.0"
 description = ""
 authors = ["dolelongan <dolelongan@gmail.com>"]
@@ -15,6 +15,7 @@ pillow = "^10.1.0"
 python-multipart = "^0.0.6"
 torch = "^2.1.0"
 transformers = "^4.35.0"
+poethepoet = "^0.24.4"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.2"
