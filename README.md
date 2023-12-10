@@ -20,6 +20,7 @@ docker compose up --build
 python -m venv .venv
 # Activate the environment, use:
 source .venv/bin/activate
+python ./ml_fetch.py
 ```
 - In a Python project managed with Poetry, dependencies are listed in a `pyproject.toml` file, make sure that `[tool.poetry] name = "bloomsage-backend"`:
 ```bash
