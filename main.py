@@ -3,10 +3,24 @@ from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
 from typing import Annotated
-from model_pipeline_template import predict_step
+from dotenv import dotenv_values
+from fastapi.staticfiles import StaticFiles
+# from machine_learning.model_pipeline_template import predict_step
+
+import os, sys
+module_path = os.path.abspath(os.path.join('.'))
+if module_path not in sys.path:
+    sys.path.append(module_path)
+
+import uvicorn
+
+from machine_learning.pipeline import classify, recommend
+
+config = dotenv_values(".env")
 
 app = FastAPI()
 
+app.mount("/images", StaticFiles(directory="data/recommender-database"), name="images")
 
 class Data(BaseModel):
     item: str
@@ -23,15 +37,32 @@ async def get_data() -> Data:
 @app.get("/")
 async def main():
     content = """
-<body>
-<form action="/uploadfiles/" enctype="multipart/form-data" method="post">
-<input name="files" type="file" multiple>
-<input type="submit">
-</form>
-</body>
+        <body>
+            <h1>Hello World from FastAPI</h1>
+        </body>
     """
     return HTMLResponse(content=content)
 
+@app.post("/upload/")
+async def upload_image(image: UploadFile):
+    root_dir = os.path.dirname(os.path.realpath(__file__))
+    
+    image_binary, species = classify(
+        image,
+        os.path.join(root_dir, "models/clf-cnn")
+    )
+    recommendations = recommend(
+        image, 10,
+        os.path.join(root_dir, "data/recommender-database.csv"),
+        os.path.join(root_dir, "models/clf-cnn"),
+        os.path.join(root_dir, "models/fe-cnn"),
+        os.path.join(root_dir, "models/clu-kmeans")
+    )
+    
+    return {
+        "species": species,
+        "recommendations": recommendations
+    }
 
 @app.get("/items/{item_id}")
 async def read_item(item_id: str) -> dict[str, str]:

@@ -20,17 +20,14 @@ docker compose up --build
 python -m venv .venv
 # Activate the environment, use:
 source .venv/bin/activate
+pip install -r requirements
 python ./ml_fetch.py
 ```
 - In a Python project managed with Poetry, dependencies are listed in a `pyproject.toml` file, make sure that `[tool.poetry] name = "bloomsage-backend"`:
 ```bash
-pip install poetry
 poetry install --no-root
 ```
-- In a Python project managed with pip, you can simply:
-```bash
-pip install -r requirements
-```
+
 ***To add additional dependencies/packages to your project, use:***
 - With `poetry`
 ```bash
@@ -40,7 +37,12 @@ poetry add [dependencies/packages]
 ```bash
 pip install [dependencies/packages]
 ```
+- Once done with the current session
 ```bash
+# Snapshot of the project dependencies
+pip freeze > requirements.txt
+# Convert requirements.txt to pyproject.toml
+req2lock -f requirements.txt
 # Deactivate the environment once done, use:
 deactivate
 ```
@@ -54,14 +56,6 @@ poe compose
 ```bash
 poe typecheck
 ```
-
-## Requirements
-
-- To export the requirements.txt
-```bash
-poetry export -f requirements.txt --output requirements.txt --without-hashes --without=dev
-```
-
 - To see the project dependencies
 ```bash
 poetry show --tree --without dev
@@ -73,3 +67,4 @@ poetry show --tree --without dev
 - [Poe The Poet Documentation](https://poethepoet.natn.io/installation.html)
 - [Image Captioning Blog from Ankur Kumar](https://ankur3107.github.io/blogs/the-illustrated-image-captioning-using-transformers/)
 - [pipx Installation](https://github.com/pypa/pipx)
+- [req2toml Documentation](https://pypi.org/project/req2toml/)
