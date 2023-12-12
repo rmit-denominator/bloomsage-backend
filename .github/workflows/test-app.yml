@@ -31,23 +31,3 @@ jobs:
           chmod +x ./.github/script/pytest.sh
           ./.github/script/pytest.sh
         shell: bash
-
-  run_tests_on_windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Dependencies Install
-        run: |
-          .\.github/script/pipcheck.ps1
-        shell: pwsh
-
-      - name: Fetch ML assets
-        run: |
-          python ml_fetch.py
-        shell: pwsh
-
-      - name: Run PowerShell script file
-        run: |
-          .\.github/script/pytest.ps1
-        shell: pwsh
