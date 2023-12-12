@@ -19,6 +19,12 @@ jobs:
           chmod +x ./.github/script/pytest.sh
           ./.github/script/pytest.sh
         shell: bash
+
+      - name: Fetch ML assets
+        run: |
+          python3 ./ml_fetch.py
+        shell: bash
+
   run_tests_on_windows:
     runs-on: windows-latest
     steps:
@@ -26,4 +32,9 @@ jobs:
       - name: Run PowerShell script file
         run: |
           .\.github/script/pytest.ps1
+        shell: pwsh
+
+      - name: Fetch ML assets
+        run: |
+          python ./ml_fetch.py
         shell: pwsh
