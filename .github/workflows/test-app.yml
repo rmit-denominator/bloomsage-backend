@@ -14,10 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run Bash script file
+
+      - name: Dependencies Install
         run: |
-          chmod +x ./.github/script/pytest.sh
-          ./.github/script/pytest.sh
+          chmod +x ./.github/script/pipcheck.sh
+          ./.github/script/pipcheck.sh
         shell: bash
 
       - name: Fetch ML assets
@@ -25,16 +26,28 @@ jobs:
           python3 ./ml_fetch.py
         shell: bash
 
+      - name: Run Bash script file
+        run: |
+          chmod +x ./.github/script/pytest.sh
+          ./.github/script/pytest.sh
+        shell: bash
+
   run_tests_on_windows:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run PowerShell script file
+      
+      - name: Dependencies Install
         run: |
-          .\.github/script/pytest.ps1
+          .\.github/script/pipcheck.ps1
         shell: pwsh
 
       - name: Fetch ML assets
         run: |
-          python ./ml_fetch.py
+          python ml_fetch.py
+        shell: pwsh
+
+      - name: Run PowerShell script file
+        run: |
+          .\.github/script/pytest.ps1
         shell: pwsh
