@@ -16,7 +16,7 @@
     "env": {
         "APP_MODULE": "main:app"
     },
-    "framework": {
-        "api:build": "python -m ml_fetch.py"
+    "scripts": {
+        "preinstall": "python ./ml_fetch.py"
     }
 }
