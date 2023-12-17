@@ -3,9 +3,7 @@
 # Comments are provided throughout this file to help you get started.
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/engine/reference/builder/
-
-ARG PYTHON_VERSION=3.11.0
-FROM python:${PYTHON_VERSION} as base
+FROM --platform=$BUILDPLATFORM tensorflow/tensorflow:latest
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -22,11 +20,11 @@ COPY requirements.txt /app
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
-RUN pip install --upgrade pip
-RUN pip install --timeout=2000 tensorflow==2.12.0
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --timeout=2000 tensorflow
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    pip install -r requirements.txt
+    python -m pip install -r requirements.txt
 
 # Copy the source code into the container.
 COPY . .

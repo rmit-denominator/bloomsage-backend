@@ -18,6 +18,10 @@ docker build -t bloomsage-backend:1.0 .
 # Run the Docker container
 docker run -p 8000:8000 bloomsage-backend:1.0
 
+# Stop the Docker container
+docker container ls
+docker stop <id>
+
 ```
 ### Poetry or Pip
 ```bash
