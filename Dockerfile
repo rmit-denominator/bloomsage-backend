@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.4
 
 # Comments are provided throughout this file to help you get started.
 # If you need more help, visit the Dockerfile reference guide at
@@ -6,9 +6,6 @@
 
 ARG PYTHON_VERSION=3.11.0
 FROM python:${PYTHON_VERSION} as base
-
-RUN curl https://sh.rustup.sh -sSf | bash -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}" 
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1

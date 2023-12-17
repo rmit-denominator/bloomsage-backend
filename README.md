@@ -13,10 +13,10 @@ In short, a virtual environment will help us manage an isolated version of pytho
 ### Docker Build
 ```docker
 # Build the Docker image
-docker build -t bloomsage-backend .
+docker build -t bloomsage-backend:1.0 .
 
 # Run the Docker container
-docker run -p 8000:8000 bloomsage-backend
+docker run -p 8000:8000 bloomsage-backend:1.0
 
 ```
 ### Poetry or Pip
