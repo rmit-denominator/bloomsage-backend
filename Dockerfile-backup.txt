@@ -1,11 +1,21 @@
 # syntax=docker/dockerfile:1
 
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/engine/reference/builder/
+# Use the TensorFlow Docker image as the base image.
+ARG TENSORFLOW_VERSION=latest
+FROM tensorflow/tensorflow:${TENSORFLOW_VERSION} as base
 
-ARG PYTHON_VERSION=3.11.0
-FROM python:${PYTHON_VERSION} as base
+# Add deadsnakes PPA to get Python 3.10
+RUN apt-get update && apt-get install -y software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa
+
+# Install Python 3.10
+RUN apt-get update && apt-get install -y python3.10 python3.10-distutils
+
+# Install pip for Python 3.10
+RUN curl https://bootstrap.pypa.io/get-pip.py | python3.10
+
+# Make python3 link to Python 3.10 instead of the default version
+RUN rm /usr/bin/python3 && ln -s /usr/bin/python3.10 /usr/bin/python3
 
 RUN curl https://sh.rustup.sh -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}" 
@@ -26,10 +36,9 @@ COPY requirements.txt /app
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
 RUN pip install --upgrade pip
-RUN pip install --timeout=2000 tensorflow==2.12.0
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    pip install -r requirements.txt
+    python -m pip install -r requirements.txt
 
 # Copy the source code into the container.
 COPY . .
