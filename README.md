@@ -16,14 +16,14 @@ In short, a virtual environment will help us manage an isolated version of pytho
 docker build -t bloomsage-backend:1.2 .
 
 # Run the Docker container
-docker run -p 8000:8000 bloomsage-backend:1.2
+docker run --rm -p 8000:8000 bloomsage-backend:1.2
 
 # Stop the Docker container
 docker container ls
-docker stop <id>
+docker stop <container_id>
 
 ```
-### Poetry or Pip
+### Pip
 ```bash
 # Create a virtual environment, navigate to your root directory and run:
 python -m venv .venv

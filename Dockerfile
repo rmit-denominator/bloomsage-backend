@@ -21,10 +21,9 @@ COPY requirements.txt /app
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
 RUN python -m pip install --upgrade pip
-RUN python -m pip install --timeout=2000 tensorflow
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    python -m pip install -r requirements.txt
+    python -m pip install --timeout=2000 -r requirements.txt
 
 # Copy the source code into the container.
 COPY . .
