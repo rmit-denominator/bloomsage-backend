@@ -20,8 +20,8 @@ COPY requirements.txt /app
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
 # Leverage a bind mount to requirements.txt to avoid having to copy them into
 # into this layer.
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install --timeout=2000 tensorflow
+RUN python -m pip install --upgrade pip
+RUN python -m pip install --timeout=2000 tensorflow
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install -r requirements.txt
@@ -33,7 +33,7 @@ COPY . .
 RUN python ml_fetch.py
 
 # Expose the port that the application listens on.
-EXPOSE 8000
+EXPOSE 8000/tcp
 
 # Run the application.
 CMD uvicorn 'main:app' --host=0.0.0.0 --port=8000
