@@ -11,9 +11,14 @@ In short, a virtual environment will help us manage an isolated version of pytho
 
 ## Build on local
 ### Docker
+- If you want to have an image on your Docker Desktop
 ```docker
 # Build the Docker image
-docker build -t bloomsage-backend:1.2 .
+docker build -t bloomsage-backend:latest .
+```
+- Or pull my prepared Docker Image from Docker Hub
+```bash
+docker pull laansdole/bloomsage-backend:latest
 ```
 ### Python
 ```bash
@@ -33,10 +38,12 @@ pip install [dependencies/packages]
 ## Local Server
 ***To start the server at http://0.0.0.0:8000***
 ### Docker
+- Run the Docker container from your local image built as above
 ```bash
 # Run the Docker container
-docker run --rm -p 8000:8000 bloomsage-backend:1.2
+docker run --rm -p 8000:8000 bloomsage-backend:latest
 ```
+
 ### Python
 ```bash
 python ./main.py
@@ -46,6 +53,10 @@ python ./main.py
 ### What is ngrok?
 ngrok is a globally distributed reverse proxy that secures, protects and accelerates your applications and network services, no matter where you run them.
 - See [ngrok Documentation](https://ngrok.com/docs/what-is-ngrok/)
+- Once setup, run:
+```bash
+ngrok start bloomsage-backend
+```
 ## Once done with the current session
 ### Docker
 ```bash
